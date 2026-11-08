@@ -33,8 +33,8 @@ jobs:
 
       - name: Uygulama simgesi ve açılış ekranı
         run: |
-          npx @capacitor/assets generate --android --iconBackgroundColor '#2B2D42' --iconBackgroundColorDark '#2B2D42' --splashBackgroundColor '#2B2D42' --splashBackgroundColorDark '#2B2D42'
-          ls android/app/src/main/res/mipmap-xxxhdpi/
+          cp -r android-ek/res/. android/app/src/main/res/
+          ls android/app/src/main/res/mipmap-xxxhdpi/ android/app/src/main/res/mipmap-anydpi-v26/
 
       - name: Dik ekran ve titreşim ayarı
         run: |
