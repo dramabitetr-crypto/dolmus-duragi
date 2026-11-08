@@ -31,6 +31,11 @@ jobs:
           npx cap add android
           npx cap sync android
 
+      - name: Uygulama simgesi ve açılış ekranı
+        run: |
+          npx @capacitor/assets generate --android --iconBackgroundColor '#2B2D42' --iconBackgroundColorDark '#2B2D42' --splashBackgroundColor '#2B2D42' --splashBackgroundColorDark '#2B2D42'
+          ls android/app/src/main/res/mipmap-xxxhdpi/
+
       - name: Dik ekran ve titreşim ayarı
         run: |
           M=android/app/src/main/AndroidManifest.xml
