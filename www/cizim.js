@@ -5,13 +5,15 @@
   "use strict";
 
   // Klasik dolmuş boyaları: gövde, tavan, koyu ton
+  // Klasik dolmuş boyaları: gövde, tavan, koyu ton. Renkler birbirinden kolay ayırt edilsin diye seçildi;
+  // yolcular da kendi dolmuşlarının gövde rengini giyer.
   const BOYALAR = [
-    { govde: "#F7C21B", tavan: "#FFE07A", koyu: "#C99400" }, // klasik sarı
-    { govde: "#23A9A6", tavan: "#F3EFE4", koyu: "#16817F" }, // turkuaz-beyaz
-    { govde: "#EFE0BF", tavan: "#C8303A", koyu: "#BFA77A" }, // krem-kırmızı
-    { govde: "#F7C21B", tavan: "#232323", koyu: "#C99400" }, // sarı-siyah
-    { govde: "#3D9A50", tavan: "#F3EFE4", koyu: "#2A7139" }, // yeşil-beyaz
-    { govde: "#8E2B3B", tavan: "#EFE0BF", koyu: "#661B28" }, // bordo-krem
+    { govde: "#F7C21B", tavan: "#FFF3C4", koyu: "#B98A00", ad: "sarı" },
+    { govde: "#1FB5B0", tavan: "#F3EFE4", koyu: "#127C79", ad: "turkuaz" },
+    { govde: "#E03A3E", tavan: "#F6E7C8", koyu: "#A3232A", ad: "kırmızı" },
+    { govde: "#43A84F", tavan: "#F3EFE4", koyu: "#2C7A36", ad: "yeşil" },
+    { govde: "#2F6FD6", tavan: "#F3EFE4", koyu: "#1E4E9E", ad: "mavi" },
+    { govde: "#9B59D0", tavan: "#F3EFE4", koyu: "#6E3A9C", ad: "mor" },
   ];
 
   let TERS = false; // aşağı bakan araçta tabela yazısı ters görünmesin
@@ -115,7 +117,18 @@
     return `<svg viewBox="-4 -4 ${W + 8} ${Y + 8}" width="100%" height="100%" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><g transform="${don}">${ic}</g></svg>`;
   }
 
-  const api = { aracSvg, BOYALAR };
+  // Yolcu: üstten bakınca baş + omuz, dolmuşunun renginde
+  function yolcuSvg(boyaNo) {
+    const b = BOYALAR[boyaNo % BOYALAR.length];
+    return `<svg viewBox="0 0 40 52" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="20" cy="48" rx="13" ry="3.5" fill="rgba(0,0,0,.3)"/>
+      <path d="M6 46 Q6 26 20 26 Q34 26 34 46 Z" fill="${b.govde}" stroke="${b.koyu}" stroke-width="2"/>
+      <circle cx="20" cy="15" r="10" fill="#F2C9A0" stroke="#B98A6A" stroke-width="1.5"/>
+      <path d="M10 13 Q12 4 20 4 Q28 4 30 13 Q25 9 20 10 Q15 9 10 13 Z" fill="#4A3426"/>
+    </svg>`;
+  }
+
+  const api = { aracSvg, yolcuSvg, BOYALAR };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else kok.Cizim = api;
 })(this);

@@ -130,7 +130,78 @@
     return en;
   }
 
-  const api = { bolum, coz, engel, yol, boyutlar, YON };
+  /* ---------------- DURAK: yolcu kuyruğu ve peronlar ----------------
+     Kurallar (oyun ekranı da aynı motoru kullanır):
+     - Otoparktan çıkan dolmuş boş bir perona girer.
+     - Kuyruğun en önündeki yolcu, kendi renginde ve yeri olan, perona EN ÖNCE gelmiş dolmuşa biner.
+     - Dolan dolmuş kalkar, peron boşalır.
+     - Öndeki yolcuya uygun dolmuş yoksa yolcu bekler; bütün peronlar doluysa durak kilitlenir (kaybedilir).
+     Kuyruk, geçerli bir çıkış sırasının oynanışı simüle edilerek üretilir: yani her durağın en az bir çözümü vardır. */
+  const KAPASITE = { 1: 2, 2: 4, 3: 6 };
+  function durakAyari(n) {
+    const renk = n <= 2 ? 2 : n <= 8 ? 3 : n <= 20 ? 4 : n <= 50 ? 5 : 6;
+    const peron = n <= 3 ? 4 : 5;
+    const pay = n <= 20 ? 1 : 0; // ilk duraklarda simülasyon 1 peron eksikle yapılır: oyuncuya fazladan pay kalır
+    return { renk, peron, pay };
+  }
+
+  // Bir peron listesinde (gelis sırasına göre) yolcunun bineceği dolmuşun indeksi
+  function binecegi(peronlar, renk) {
+    let en = -1;
+    peronlar.forEach((p, i) => {
+      if (p && !p.yolda && p.renk === renk && p.dolu < p.kap && (en === -1 || p.sira < peronlar[en].sira)) en = i;
+    });
+    return en;
+  }
+
+  function durakKur(n, park) {
+    const ayar = durakAyari(n);
+    const rnd = rastgele(n * 31337 + 99);
+    const araclar = park.araclar;
+    // Renkleri yeniden dağıt (her renk en az bir kez)
+    const renkler = [];
+    for (let i = 0; i < araclar.length; i++) renkler.push(i < ayar.renk ? i : Math.floor(rnd() * ayar.renk));
+    for (let i = renkler.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [renkler[i], renkler[j]] = [renkler[j], renkler[i]]; }
+    araclar.forEach((a, i) => { a.renk = renkler[i]; a.kap = KAPASITE[a.hucreler.length] || 4; });
+
+    // Rastgele ama geçerli bir çıkış sırası
+    let kalan = araclar.slice();
+    const sira = [];
+    while (kalan.length) {
+      const g = izgara(kalan, park.sat, park.sut);
+      const serbest = kalan.filter((a) => !engel(a, kalan, park.sat, park.sut, g));
+      const s = serbest[Math.floor(rnd() * serbest.length)];
+      sira.push(s);
+      kalan = kalan.filter((a) => a.id !== s.id);
+    }
+
+    // Bu sırayla oynanışı simüle edip kuyruğu üret
+    const P = ayar.peron - ayar.pay;
+    const peronlar = new Array(P).fill(null);
+    let k = 0, gelis = 0;
+    const kuyruk = [];
+    const doldur = () => {
+      for (let i = 0; i < P && k < sira.length; i++) {
+        if (!peronlar[i]) { const a = sira[k++]; peronlar[i] = { id: a.id, renk: a.renk, kap: a.kap, dolu: 0, sira: gelis++ }; }
+      }
+    };
+    doldur();
+    while (peronlar.some((p) => p)) {
+      const dolular = peronlar.filter((p) => p && p.dolu < p.kap);
+      const secilen = dolular[Math.floor(rnd() * dolular.length)];
+      const adet = 1 + Math.floor(rnd() * 3);
+      for (let t = 0; t < adet; t++) {
+        const i = binecegi(peronlar, secilen.renk);
+        kuyruk.push(secilen.renk);
+        peronlar[i].dolu++;
+        if (peronlar[i].dolu >= peronlar[i].kap) { peronlar[i] = null; doldur(); }
+        if (secilen.dolu >= secilen.kap || !peronlar.includes(secilen)) break;
+      }
+    }
+    return { kuyruk, peron: ayar.peron, renkSayisi: ayar.renk, cozum: sira.map((a) => a.id) };
+  }
+
+  const api = { bolum, coz, engel, yol, boyutlar, YON, durakKur, binecegi, KAPASITE };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else kok.Uretici = api;
 })(this);

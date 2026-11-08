@@ -6,16 +6,16 @@
 <meta name="theme-color" content="#2B2D42">
 <title>Dolmuş Durağı</title>
 <style>
-:root{--gece:#2B2D42;--gece2:#363950;--asfalt:#3A3D4A;--sari:#F7C21B;--sari2:#C99400;--krem:#FFF8EB;--kirmizi:#E63946;--soluk:#B8BCD0}
+:root{--gece:#2B2D42;--gece2:#363950;--asfalt:#3A3D4A;--kaldirim:#B9B3A6;--sari:#F7C21B;--sari2:#C99400;--krem:#FFF8EB;--kirmizi:#E63946;--soluk:#B8BCD0}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 html,body{margin:0;height:100%;background:var(--gece);color:#fff;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;touch-action:manipulation}
 .ekran{position:fixed;inset:0;display:none;flex-direction:column;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 .ekran.acik{display:flex}
 .btn{border:0;border-radius:16px;font-weight:800;font-size:20px;padding:16px 28px;background:var(--sari);color:#222;box-shadow:0 5px 0 var(--sari2);position:relative}
 .btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--sari2)}
-.btn.gri{background:#E8E8F0;box-shadow:0 5px 0 #A9AABC;font-size:15px;padding:11px 14px}
+.btn.gri{background:#E8E8F0;box-shadow:0 5px 0 #A9AABC;font-size:15px;padding:11px 12px}
 .btn.gri:active{box-shadow:0 2px 0 #A9AABC}
-.btn:disabled{opacity:.45}
+.btn small{font-size:11px;font-weight:700}
 .sayac{position:absolute;top:-8px;right:-8px;background:var(--kirmizi);color:#fff;border-radius:12px;min-width:24px;height:24px;font-size:13px;display:flex;align-items:center;justify-content:center;padding:0 6px;box-shadow:0 2px 0 rgba(0,0,0,.3)}
 /* ANA */
 #ana{align-items:center;justify-content:center;gap:14px;background:radial-gradient(circle at 50% 28%,#44476a,var(--gece) 68%)}
@@ -33,26 +33,48 @@ html,body{margin:0;height:100%;background:var(--gece);color:#fff;font-family:sys
 .durak.simdi{background:var(--sari);color:#222;box-shadow:0 4px 0 var(--sari2)}
 .durak.kilitli{opacity:.35}
 /* OYUN */
-.ust{display:flex;align-items:center;gap:8px;padding:10px 14px 4px}
+.ust{display:flex;align-items:center;gap:8px;padding:8px 12px 4px}
 .ust .baslik{flex:1;min-width:0}
 .ust .baslik b{font-size:18px}
 .ust .baslik small{display:block;color:var(--soluk);font-weight:600;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ikon-btn{background:var(--gece2);border:0;color:#fff;border-radius:12px;width:40px;height:40px;font-size:20px;flex:none}
-.ilerleme{height:6px;margin:4px 14px 0;background:var(--gece2);border-radius:3px;overflow:hidden}
+/* durak bölümü */
+.durak-alani{margin:4px 10px 0;background:linear-gradient(#4b4f63,#41445a);border-radius:16px;padding:8px 8px 0;box-shadow:inset 0 -6px 0 #2f3243}
+.durak-ust{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.durak-tabela{background:#1B6B3A;border:2px solid #fff;color:#fff;border-radius:6px;padding:2px 9px;font-weight:800;font-size:12px;letter-spacing:.4px;box-shadow:0 2px 0 rgba(0,0,0,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
+.yolcu-say{margin-left:auto;font-weight:800;font-size:14px;background:rgba(0,0,0,.25);border-radius:12px;padding:3px 9px}
+.kuyruk{display:flex;align-items:flex-end;gap:2px;height:40px;padding:0 4px;background:var(--kaldirim);border-radius:10px;overflow:hidden;position:relative}
+.kuyruk .y{width:24px;height:31px;flex:none;transition:transform .12s,opacity .12s}
+.kuyruk .y:first-child{width:30px;height:38px}
+.kuyruk .y.gitti{transform:translate(-14px,10px) scale(.4);opacity:0}
+.kuyruk .ok{color:#555;font-weight:900;font-size:16px;margin-right:2px;align-self:center}
+.peronlar{display:flex;gap:6px;justify-content:center;padding:8px 0 10px}
+.peron{border:2px dashed rgba(255,255,255,.35);border-radius:10px;height:92px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:4px;background:rgba(0,0,0,.18)}
+.peron .p-no{position:absolute;top:2px;left:5px;font-size:10px;font-weight:800;color:rgba(255,255,255,.45)}
+.peron .p-arac{flex:1;display:flex;align-items:center;justify-content:center;width:100%;padding-top:4px}
+.peron .p-arac>div{transition:transform .35s ease-out,opacity .35s}
+.peron.gel .p-arac>div{animation:gel-p .35s ease-out}
+@keyframes gel-p{from{transform:translateY(40px);opacity:0}}
+.peron.kalk .p-arac>div{transform:translateY(-70px);opacity:0}
+.peron.yolda .p-arac>div{opacity:.35}
+.koltuk{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;max-width:100%;margin-top:3px}
+.koltuk i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}
+.koltuk i.d{background:#fff}
+.peron.kilitli-p{border-color:#ff6b6b;animation:titre .4s}
+.ilerleme{height:5px;margin:6px 14px 0;background:var(--gece2);border-radius:3px;overflow:hidden}
 .ilerleme div{height:100%;width:0;background:var(--sari);transition:width .3s}
-.alan{flex:1;display:flex;align-items:center;justify-content:center;position:relative;flex-direction:column}
-.durak-tabela{background:#1B6B3A;border:2px solid #fff;color:#fff;border-radius:6px;padding:3px 12px;font-weight:800;font-size:13px;margin-bottom:8px;letter-spacing:.5px;box-shadow:0 3px 0 rgba(0,0,0,.3)}
-#tahta{position:relative;border-radius:14px;background-color:var(--asfalt);box-shadow:0 0 0 6px #555a6e,0 0 0 8px #F7C21B,0 10px 24px rgba(0,0,0,.4)}
+.alan{flex:1;display:flex;align-items:center;justify-content:center;position:relative;flex-direction:column;min-height:0}
+#tahta{position:relative;border-radius:12px;background-color:var(--asfalt);box-shadow:0 0 0 5px #555a6e,0 0 0 7px #F7C21B,0 10px 24px rgba(0,0,0,.4)}
 .arac{position:absolute;transition:transform .42s cubic-bezier(.5,0,.75,0),opacity .42s}
 .arac svg{display:block;overflow:visible}
 .arac.ipucu{animation:parla .7s ease-in-out infinite alternate;z-index:2}
 @keyframes parla{from{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #fff)}to{filter:drop-shadow(0 0 1px var(--sari)) drop-shadow(0 0 3px var(--sari))}}
-.arac.carpti{animation:titre .3s}
-@keyframes titre{25%{filter:brightness(1.6) saturate(.3)}50%{filter:none}75%{filter:brightness(1.6) saturate(.3)}}
+.arac.carpti,.arac.dolu-uyari{animation:titre .3s}
+@keyframes titre{25%{filter:brightness(1.6) saturate(.3);transform:translateX(-3px)}50%{filter:none;transform:none}75%{filter:brightness(1.6) saturate(.3);transform:translateX(3px)}}
 .cekici-modu .arac{animation:secim 1s ease-in-out infinite}
 @keyframes secim{50%{filter:drop-shadow(0 0 5px #ff5a5a)}}
-.alt{display:flex;justify-content:center;gap:12px;padding:12px 14px 16px}
-.yardim{color:var(--sari);font-weight:700;font-size:15px;text-align:center;padding:0 20px;min-height:22px;margin-bottom:6px}
+.alt{display:flex;justify-content:center;gap:8px;padding:10px 10px 14px}
+.yardim{color:var(--sari);font-weight:700;font-size:14px;text-align:center;padding:0 16px;min-height:20px;margin:4px 0 8px}
 /* PENCERE */
 .perde{position:fixed;inset:0;background:rgba(10,10,25,.65);display:none;align-items:center;justify-content:center;z-index:10;padding:20px}
 .perde.acik{display:flex}
@@ -68,7 +90,7 @@ html,body{margin:0;height:100%;background:var(--gece);color:#fff;font-family:sys
 .gun.alindi{background:#CDE8D2;color:#2A7139}
 .gun.bugun{background:var(--sari);color:#222;box-shadow:0 3px 0 var(--sari2)}
 .gun.yedi{grid-column:span 2}
-.toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top));transform:translateX(-50%);background:rgba(0,0,0,.82);padding:9px 16px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;white-space:nowrap}
+.toast{position:fixed;left:50%;top:calc(64px + env(safe-area-inset-top));transform:translateX(-50%);background:rgba(0,0,0,.85);padding:9px 16px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;white-space:nowrap}
 .toast.goster{opacity:1}
 .konfeti{position:fixed;top:-12px;width:9px;height:14px;z-index:9;pointer-events:none;animation:dus linear forwards}
 @keyframes dus{to{transform:translateY(110vh) rotate(720deg)}}
@@ -76,6 +98,16 @@ html,body{margin:0;height:100%;background:var(--gece);color:#fff;font-family:sys
 .anahtar{width:52px;height:30px;border-radius:15px;background:#ccc;position:relative;border:0}
 .anahtar::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .2s}
 .anahtar.acik{background:#3D9A50}.anahtar.acik::after{left:25px}
+.nasil{text-align:left;line-height:1.5;color:#444}
+/* kısa ekranlı telefonlar */
+@media (max-height:760px){
+  .ust{padding:4px 10px 2px}.ikon-btn{width:34px;height:34px;font-size:17px}.ust .baslik b{font-size:16px}
+  .durak-alani{padding:5px 6px 0}.durak-ust{margin-bottom:4px}
+  .kuyruk{height:32px}.kuyruk .y{width:20px;height:26px}.kuyruk .y:first-child{width:24px;height:31px}
+  .peronlar{padding:5px 0 7px}.peron{height:72px}
+  .alt{padding:6px 8px 8px;gap:6px}.alt .btn{font-size:13px;padding:8px 9px}.alt .btn small{display:none}
+  .yardim{font-size:12px;margin:2px 0 4px}
+}
 </style>
 </head>
 <body>
@@ -105,18 +137,22 @@ html,body{margin:0;height:100%;background:var(--gece);color:#fff;font-family:sys
   <div class="ust">
     <button class="ikon-btn" data-geri aria-label="Ana ekran">⌂</button>
     <div class="baslik"><b id="durakNo">Durak 1</b><small id="durakAlt">Bursa</small></div>
-    <div class="rozet" id="canlar">❤️❤️❤️</div>
     <div class="rozet" id="jeton">🪙 0</div>
+  </div>
+  <div class="durak-alani">
+    <div class="durak-ust"><div class="durak-tabela" id="tabela">🚏 DURAK</div><div class="yolcu-say" id="yolcuSay">👥 0</div></div>
+    <div class="kuyruk" id="kuyruk"></div>
+    <div class="peronlar" id="peronlar"></div>
   </div>
   <div class="ilerleme"><div id="ilerleme"></div></div>
   <div class="alan" id="alan">
     <div class="yardim" id="yardim"></div>
-    <div class="durak-tabela" id="tabela">🚏 DURAK</div>
     <div id="tahta"></div>
   </div>
   <div class="alt">
-    <button class="btn gri" id="ipucuBtn">💡 İpucu</button>
-    <button class="btn gri" id="cekiciBtn">🛻 Çekici</button>
+    <button class="btn gri" id="ipucuBtn">💡</button>
+    <button class="btn gri" id="cekiciBtn">🛻</button>
+    <button class="btn gri" id="peronBtn">➕</button>
     <button class="btn gri" id="yenidenBtn">↻</button>
   </div>
 </section>
@@ -129,15 +165,14 @@ html,body{margin:0;height:100%;background:var(--gece);color:#fff;font-family:sys
 <script>
 "use strict";
 /* ========== AYARLAR ========== */
-const IPUCU_FIYAT=30, CEKICI_FIYAT=60, CAN_FIYAT=40, MAKS_CAN=3;
-const GUNLUK=[{j:20},{j:30},{j:40},{j:50,ipucu:1},{j:60},{j:80},{j:100,cekici:1}];
+const FIYAT={ipucu:30,cekici:60,peron:50}, DEVAM_FIYAT=40, MAKS_PERON=7;
+const GUNLUK=[{j:20},{j:30},{j:40},{j:50,ipucu:1},{j:60,peron:1},{j:80},{j:100,cekici:1}];
 const SEHIRLER=["Heykel","Yıldırım","Osmangazi","Nilüfer","Mudanya","Gemlik","İnegöl","Uludağ","İznik","Gürsu","Kestel","M.K.Paşa","Orhangazi","Karacabey","Yenişehir","Setbaşı","Emirsultan","Tophane","Cumalıkızık","Görükle"];
 const durakAdi=n=>SEHIRLER[(n-1)%SEHIRLER.length];
-const BOYA_SIRA=[0,1,2,3,4,5]; // üreticinin renk numarası → dolmuş boyası
 
 /* ========== KAYIT ========== */
 const ANAHTAR="dd_v1";
-const VARSAYILAN={bolum:1,jeton:100,ses:true,titresim:true,enIyi:{},esya:{ipucu:2,cekici:1},seri:0,enSeri:0,gunluk:{son:null,gun:0}};
+const VARSAYILAN={bolum:1,jeton:100,ses:true,titresim:true,enIyi:{},esya:{ipucu:2,cekici:1,peron:1},seri:0,enSeri:0,gunluk:{son:null,gun:0}};
 let K=(()=>{ try{ const d=JSON.parse(localStorage.getItem(ANAHTAR)||"{}"); const k=Object.assign({},VARSAYILAN,d); k.esya=Object.assign({},VARSAYILAN.esya,d.esya||{}); k.gunluk=Object.assign({},VARSAYILAN.gunluk,d.gunluk||{}); k.enIyi=d.enIyi||{}; return k; }catch(e){ return JSON.parse(JSON.stringify(VARSAYILAN)); } })();
 const kaydet=()=>{ try{ localStorage.setItem(ANAHTAR,JSON.stringify(K)); }catch(e){} };
 
@@ -154,11 +189,12 @@ function ses(tur){
   try{
     AC=AC||new (window.AudioContext||window.webkitAudioContext)();
     if(AC.state==="suspended") AC.resume();
-    if(tur==="cik"){ nota(260,0,.25,"triangle",.16,820); }
-    else if(tur==="korna"){ nota(392,0,.12,"square",.07); nota(392,.15,.18,"square",.07); }
-    else if(tur==="carp"){ nota(150,0,.25,"square",.11,60); }
-    else if(tur==="kazan"){ [523,659,784,1047].forEach((f,i)=>nota(f,i*.11,.3,"triangle",.18)); }
-    else if(tur==="kaybet"){ nota(400,0,.6,"sawtooth",.08,110); }
+    if(tur==="cik") nota(260,0,.25,"triangle",.14,820);
+    else if(tur==="bin") nota(700+Math.random()*120,0,.05,"sine",.05);
+    else if(tur==="korna"){ nota(392,0,.11,"square",.06); nota(392,.14,.16,"square",.06); }
+    else if(tur==="carp") nota(150,0,.25,"square",.1,60);
+    else if(tur==="kazan") [523,659,784,1047].forEach((f,i)=>nota(f,i*.11,.3,"triangle",.18));
+    else if(tur==="kaybet") nota(400,0,.6,"sawtooth",.08,110);
     else if(tur==="jeton"){ nota(988,0,.08,"square",.06); nota(1319,.08,.18,"square",.06); }
   }catch(e){}
 }
@@ -166,7 +202,7 @@ const titre=ms=>{ if(!K.titresim) return; try{ navigator.vibrate&&navigator.vibr
 
 /* ========== YARDIMCI ========== */
 const $=s=>document.querySelector(s);
-function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("goster"); clearTimeout(t._z); t._z=setTimeout(()=>t.classList.remove("goster"),1800); }
+function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("goster"); clearTimeout(t._z); t._z=setTimeout(()=>t.classList.remove("goster"),1900); }
 let aktifEkran="ana";
 function ekran(ad){ aktifEkran=ad; document.querySelectorAll(".ekran").forEach(e=>e.classList.toggle("acik",e.id===ad)); }
 function git(ad){ if(aktifEkran==="ana"&&ad!=="ana") history.pushState({e:ad},""); ekran(ad); }
@@ -175,7 +211,7 @@ function pencereKapat(){ $("#perde").classList.remove("acik"); }
 const pencereAcik=()=>$("#perde").classList.contains("acik");
 function bugunStr(d){ d=d||new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function konfeti(){
-  const renk=["#F7C21B","#23A9A6","#E63946","#3D9A50","#fff"];
+  const renk=["#F7C21B","#1FB5B0","#E03A3E","#43A84F","#2F6FD6","#fff"];
   for(let i=0;i<60;i++){
     const k=document.createElement("div"); k.className="konfeti";
     k.style.left=Math.random()*100+"vw"; k.style.background=renk[i%renk.length];
@@ -184,16 +220,25 @@ function konfeti(){
     document.body.appendChild(k); setTimeout(()=>k.remove(),3200);
   }
 }
+// Eşya varsa eşyadan, yoksa jetondan öde
+function ode(tur,fiyat){
+  if(K.esya[tur]>0){ K.esya[tur]--; kaydet(); return true; }
+  if(K.jeton>=fiyat){ K.jeton-=fiyat; kaydet(); return true; }
+  toast("Yeterli jeton yok 🪙"); return false;
+}
 
 /* ========== BÖLÜMLER ========== */
-// İlk iki durak öğretici: elle hazırlandı
+// İlk iki durağın otoparkı elle hazırlandı (öğretici); yolcular her durakta motorla üretilir
 const OGRETICI={
-  1:{sat:4,sut:4,araclar:[{yon:"R",hucreler:[[1,1],[1,0]],renk:0},{yon:"U",hucreler:[[2,1],[3,1]],renk:1},{yon:"D",hucreler:[[0,3]],renk:4}]},
-  2:{sat:5,sut:4,araclar:[{yon:"L",hucreler:[[2,0],[2,1]],renk:0},{yon:"U",hucreler:[[3,0],[4,0]],renk:2},{yon:"R",hucreler:[[0,3],[0,2]],renk:1},{yon:"D",hucreler:[[1,2]],renk:4},{yon:"L",hucreler:[[3,2],[3,3]],renk:3}]}
+  1:{sat:4,sut:4,araclar:[{yon:"R",hucreler:[[1,1],[1,0]]},{yon:"U",hucreler:[[2,1],[3,1]]},{yon:"D",hucreler:[[1,3],[0,3]]}]},
+  2:{sat:5,sut:4,araclar:[{yon:"L",hucreler:[[2,0],[2,1]]},{yon:"U",hucreler:[[3,0],[4,0]]},{yon:"R",hucreler:[[0,3],[0,2]]},{yon:"D",hucreler:[[1,2]]},{yon:"L",hucreler:[[3,2],[3,3]]}]}
 };
 function bolumYukle(n){
-  if(OGRETICI[n]){ const o=JSON.parse(JSON.stringify(OGRETICI[n])); o.araclar.forEach((a,i)=>a.id=i); return o; }
-  const b=Uretici.bolum(n); return {sat:b.sat,sut:b.sut,araclar:b.araclar};
+  let park;
+  if(OGRETICI[n]){ park=JSON.parse(JSON.stringify(OGRETICI[n])); park.araclar.forEach((a,i)=>a.id=i); }
+  else { const b=Uretici.bolum(n); park={sat:b.sat,sut:b.sut,araclar:b.araclar}; }
+  const d=Uretici.durakKur(n,park); // araçlara renk ve kapasite de atar
+  return Object.assign(park,d);
 }
 
 /* ========== OYUN ========== */
@@ -202,26 +247,28 @@ function bolumBaslat(n){
   pencereKapat();
   document.querySelectorAll(".konfeti").forEach(k=>k.remove());
   const b=bolumYukle(n);
-  O={n,sat:b.sat,sut:b.sut,araclar:b.araclar,kalan:b.araclar.slice(),toplam:b.araclar.length,can:MAKS_CAN,kilit:false,bitti:false,cekici:false,carpma:0};
+  O={n,sat:b.sat,sut:b.sut,kalan:b.araclar.slice(),kuyruk:b.kuyruk.slice(),toplamYolcu:b.kuyruk.length,
+     peron:new Array(b.peron).fill(null),siraNo:0,mesgul:false,bitti:false,cekici:false,carpma:0,ekPeron:0};
   $("#durakNo").textContent="Durak "+n;
   $("#durakAlt").textContent=durakAdi(n)+(K.seri>1?` · 🔥 ${K.seri} seri`:"");
   $("#tabela").textContent="🚏 "+durakAdi(n).toLocaleUpperCase("tr-TR")+" DURAĞI";
-  $("#yardim").textContent = n===1 ? "Önü açık dolmuşa dokun, duraktan çıksın! 👆" : n===2 ? "Önü kapalı olana dokunma: çarparsan can gider ❤️" : "";
+  $("#yardim").textContent = n===1 ? "Önü açık dolmuşa dokun: durağa gidip kendi rengindeki yolcuları alsın 👆"
+    : n===2 ? "Kuyruğun başındaki yolcunun rengine bak, o renkteki dolmuşu gönder"
+    : n===3 ? "Dikkat: peronların hepsi dolar ve öndeki yolcuya uygun dolmuş yoksa durak kilitlenir!" : "";
   if(aktifEkran!=="oyun") git("oyun");
-  ustGuncelle(); ciz();
+  ustGuncelle(); kuyrukCiz(); peronCiz(); ciz();
 }
 
+/* --- otopark --- */
 function ciz(){
   const alan=$("#alan"), t=$("#tahta");
-  const genis=alan.clientWidth-36, yuks=alan.clientHeight-80;
-  HS=Math.max(24,Math.floor(Math.min(genis/O.sut, yuks/O.sat, 78)));
+  const genis=alan.clientWidth-28, yuks=alan.clientHeight-($("#yardim").offsetHeight+30);
+  HS=Math.max(22,Math.floor(Math.min(genis/O.sut, yuks/O.sat, 74)));
   t.style.width=HS*O.sut+"px"; t.style.height=HS*O.sat+"px";
-  // Asfaltta park çizgileri
   t.style.backgroundImage=`linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px)`;
   t.style.backgroundSize=`${HS}px ${HS}px`;
   t.innerHTML="";
   O.kalan.forEach(a=>t.appendChild(aracEl(a)));
-  ilerlemeGuncelle();
 }
 function aracEl(a){
   const rs=a.hucreler.map(x=>x[0]), cs=a.hucreler.map(x=>x[1]);
@@ -230,107 +277,180 @@ function aracEl(a){
   el.className="arac"; el.dataset.id=a.id;
   const p=Math.round(HS*0.04);
   el.style.cssText=`left:${c0*HS+p}px;top:${r0*HS+p}px;width:${w*HS-2*p}px;height:${h*HS-2*p}px`;
-  el.innerHTML=Cizim.aracSvg(a.hucreler.length,BOYA_SIRA[a.renk%BOYA_SIRA.length],a.yon);
+  el.innerHTML=Cizim.aracSvg(a.hucreler.length,a.renk,a.yon);
   el.addEventListener("pointerdown",e=>{ e.preventDefault(); dokun(a.id); });
   return el;
 }
-function ilerlemeGuncelle(){ $("#ilerleme").style.width=(100*(O.toplam-O.kalan.length)/O.toplam)+"%"; }
 
-function aracCikar(a,el){
-  const [dr,dc]=Uretici.YON[a.yon];
-  O.kalan=O.kalan.filter(x=>x.id!==a.id);
-  const mesafe=(Math.max(O.sat,O.sut)+4)*HS;
-  el.style.pointerEvents="none";
-  el.style.transform=`translate(${dc*mesafe}px,${dr*mesafe}px)`; el.style.opacity="0";
-  setTimeout(()=>el.remove(),450);
-  ilerlemeGuncelle();
-  if(!O.kalan.length){ O.bitti=true; setTimeout(kazandi,480); }
+/* --- durak: kuyruk ve peronlar --- */
+function kuyrukCiz(binen){
+  const k=$("#kuyruk"), gorunen=Math.max(6,Math.floor((k.clientWidth-40)/26));
+  k.innerHTML=`<span class="ok">◀</span>`+O.kuyruk.slice(0,gorunen).map(r=>`<div class="y">${Cizim.yolcuSvg(r)}</div>`).join("");
+  $("#yolcuSay").textContent="👥 "+O.kuyruk.length;
+  $("#ilerleme").style.width=(100*(O.toplamYolcu-O.kuyruk.length)/O.toplamYolcu)+"%";
+}
+function peronCiz(gelen){
+  const k=$("#peronlar"), S=O.peron.length;
+  const gen=Math.min(66,Math.floor((k.clientWidth-(S-1)*6)/S));
+  k.innerHTML=O.peron.map((p,i)=>{
+    let ic="", sinif="peron";
+    if(p){
+      const boy=p.boy, kisa=innerHeight<=760, gen0=Math.min(gen-16,kisa?26:34), kutuY=Math.min(kisa?46:64,gen0*boy), kutuX=Math.round(kutuY/boy);
+      ic=`<div class="p-arac"><div style="width:${kutuX}px;height:${kutuY}px">${Cizim.aracSvg(boy,p.renk,"U")}</div></div>
+          <div class="koltuk">${Array.from({length:p.kap},(_,j)=>`<i class="${j<p.dolu?"d":""}"></i>`).join("")}</div>`;
+      if(p.yolda) sinif+=" yolda"; if(p.kalkiyor) sinif+=" kalk"; if(gelen===i) sinif+=" gel";
+    }
+    return `<div class="${sinif}" style="width:${gen}px"><span class="p-no">${i+1}</span>${ic}</div>`;
+  }).join("");
 }
 
+/* --- dokunma --- */
+function bosPeron(){ return O.peron.indexOf(null); }
 function dokun(id){
-  if(!O||O.kilit||O.bitti) return;
+  if(!O||O.bitti) return;
   const a=O.kalan.find(x=>x.id===id); if(!a) return;
   const el=document.querySelector(`.arac[data-id="${id}"]`);
-  if(O.cekici){ // Çekici: seçilen aracı kaldır
-    O.cekici=false; $("#tahta").classList.remove("cekici-modu"); $("#yardim").textContent="";
-    if(K.esya.cekici>0) K.esya.cekici--; else K.jeton-=CEKICI_FIYAT;
-    kaydet(); ustGuncelle();
-    el.style.transition="transform .5s ease-in,opacity .5s"; el.style.transform="translateY(-40px) scale(.6) rotate(12deg)"; el.style.opacity="0";
-    O.kalan=O.kalan.filter(x=>x.id!==id); el.style.pointerEvents="none";
-    setTimeout(()=>el.remove(),520); ses("korna"); titre(30); ilerlemeGuncelle();
-    if(!O.kalan.length){ O.bitti=true; setTimeout(kazandi,550); }
-    return;
-  }
+  if(O.cekici) return cekiciKullan(a,el);
   document.querySelectorAll(".arac.ipucu").forEach(e=>e.classList.remove("ipucu"));
   const [dr,dc]=Uretici.YON[a.yon];
   const e=Uretici.engel(a,O.kalan,O.sat,O.sut);
-  if(!e){ ses("cik"); titre(15); aracCikar(a,el); }
-  else{
-    O.kilit=true; O.carpma++;
+  if(e){ // önü kapalı: engele kadar gidip geri döner
+    if(el.dataset.hareket) return;
+    el.dataset.hareket="1"; O.carpma++;
     const yol=e.mesafe*HS+HS*0.15;
-    el.style.transition="transform .16s ease-in";
-    el.style.transform=`translate(${dc*yol}px,${dr*yol}px)`;
+    el.style.transition="transform .16s ease-in"; el.style.transform=`translate(${dc*yol}px,${dr*yol}px)`;
     setTimeout(()=>{
       el.classList.add("carpti"); ses("carp"); titre([40,30,40]);
       const engelEl=document.querySelector(`.arac[data-id="${e.id}"]`); engelEl&&engelEl.classList.add("carpti");
       el.style.transition="transform .22s ease-out"; el.style.transform="";
-      setTimeout(()=>{ el.classList.remove("carpti"); engelEl&&engelEl.classList.remove("carpti"); el.style.transition=""; O.kilit=false; },300);
-      O.can--; ustGuncelle();
-      if(O.can<=0){ O.bitti=true; setTimeout(kaybetti,350); }
+      setTimeout(()=>{ el.classList.remove("carpti"); engelEl&&engelEl.classList.remove("carpti"); el.style.transition=""; delete el.dataset.hareket; },300);
     },170);
+    return;
+  }
+  const i=bosPeron();
+  if(i<0){ el.classList.add("dolu-uyari"); setTimeout(()=>el.classList.remove("dolu-uyari"),320); toast("Peronlar dolu, bir dolmuşun kalkmasını bekle"); return; }
+  // Çıkış: otoparktan çıkar, perona git
+  O.kalan=O.kalan.filter(x=>x.id!==id);
+  O.peron[i]={id,renk:a.renk,kap:a.kap,boy:a.hucreler.length,dolu:0,yolda:true,sira:Infinity};
+  peronCiz();
+  const mesafe=(Math.max(O.sat,O.sut)+4)*HS;
+  el.style.pointerEvents="none";
+  el.style.transform=`translate(${dc*mesafe}px,${dr*mesafe}px)`; el.style.opacity="0";
+  ses("cik"); titre(15);
+  setTimeout(()=>{ el.remove(); perondaVar(i); },420);
+}
+function perondaVar(i){
+  const p=O.peron[i]; if(!p) return;
+  p.yolda=false; p.sira=O.siraNo++;
+  peronCiz(i); ses("korna");
+  bindirBaslat();
+}
+
+/* --- biniş döngüsü --- */
+function bindirBaslat(){ if(O&&!O.mesgul){ O.mesgul=true; setTimeout(adim,180); } }
+function adim(){
+  if(!O||O.bitti){ if(O) O.mesgul=false; return; }
+  if(!O.kuyruk.length){ O.mesgul=false; return kontrol(); }
+  const i=Uretici.binecegi(O.peron,O.kuyruk[0]);
+  if(i<0){ O.mesgul=false; return kontrol(); }
+  O.kuyruk.shift(); const p=O.peron[i]; p.dolu++;
+  const ilk=$("#kuyruk .y"); if(ilk) ilk.classList.add("gitti");
+  ses("bin");
+  setTimeout(()=>{
+    kuyrukCiz();
+    if(p.dolu>=p.kap){ p.kalkiyor=true; peronCiz(); setTimeout(()=>{ if(O.peron[i]===p){ O.peron[i]=null; peronCiz(); } kontrol(); },380); }
+    else peronCiz();
+    setTimeout(adim,40);
+  },90);
+}
+function kontrol(){
+  if(!O||O.bitti) return;
+  if(!O.kuyruk.length && !O.kalan.length && O.peron.every(p=>!p)){ O.bitti=true; return setTimeout(kazandi,300); }
+  if(O.mesgul) return;
+  if(O.kuyruk.length && Uretici.binecegi(O.peron,O.kuyruk[0])<0 && O.peron.every(p=>p&&!p.yolda&&!p.kalkiyor)){
+    O.bitti=true; document.querySelectorAll(".peron").forEach(e=>e.classList.add("kilitli-p"));
+    return setTimeout(kaybetti,500);
   }
 }
 
+/* --- güçlendiriciler --- */
 function ustGuncelle(){
-  $("#canlar").textContent="❤️".repeat(Math.max(0,O.can))+"🤍".repeat(Math.max(0,MAKS_CAN-O.can));
   $("#jeton").textContent="🪙 "+K.jeton;
-  $("#ipucuBtn").innerHTML=`💡 İpucu`+(K.esya.ipucu>0?`<span class="sayac">${K.esya.ipucu}</span>`:` <small>${IPUCU_FIYAT}🪙</small>`);
-  $("#cekiciBtn").innerHTML=`🛻 Çekici`+(K.esya.cekici>0?`<span class="sayac">${K.esya.cekici}</span>`:` <small>${CEKICI_FIYAT}🪙</small>`);
+  const etiket=(tur,ikon,ad)=>`${ikon} ${ad}`+(K.esya[tur]>0?`<span class="sayac">${K.esya[tur]}</span>`:` <small>${FIYAT[tur]}🪙</small>`);
+  $("#ipucuBtn").innerHTML=etiket("ipucu","💡","İpucu");
+  $("#cekiciBtn").innerHTML=etiket("cekici","🛻","Çekici");
+  $("#peronBtn").innerHTML=etiket("peron","➕","Peron");
 }
-
 function ipucu(){
-  if(!O||O.bitti||O.kilit||O.cekici) return;
+  if(!O||O.bitti||O.cekici) return;
   if(document.querySelector(".arac.ipucu")) return toast("İpucu zaten gösteriliyor");
-  const serbest=O.kalan.find(a=>!Uretici.engel(a,O.kalan,O.sat,O.sut)); if(!serbest) return;
-  if(K.esya.ipucu>0) K.esya.ipucu--; else if(K.jeton>=IPUCU_FIYAT) K.jeton-=IPUCU_FIYAT; else return toast("Yeterli jeton yok 🪙");
-  kaydet(); ustGuncelle();
-  document.querySelector(`.arac[data-id="${serbest.id}"]`).classList.add("ipucu");
+  if(bosPeron()<0) return toast("Önce bir dolmuşun kalkmasını bekle");
+  const serbest=O.kalan.filter(a=>!Uretici.engel(a,O.kalan,O.sat,O.sut)); if(!serbest.length) return;
+  // Kuyrukta rengi en önde görünen serbest dolmuşu öner
+  const sira=r=>{ const k=O.kuyruk.indexOf(r); return k<0?1e9:k; };
+  const oneri=serbest.slice().sort((x,y)=>sira(x.renk)-sira(y.renk))[0];
+  if(!ode("ipucu",FIYAT.ipucu)) return;
+  ustGuncelle();
+  document.querySelector(`.arac[data-id="${oneri.id}"]`).classList.add("ipucu");
 }
 function cekici(){
-  if(!O||O.bitti||O.kilit) return;
+  if(!O||O.bitti) return;
   if(O.cekici){ O.cekici=false; $("#tahta").classList.remove("cekici-modu"); $("#yardim").textContent=""; return; }
-  if(K.esya.cekici<=0 && K.jeton<CEKICI_FIYAT) return toast("Yeterli jeton yok 🪙");
+  if(bosPeron()<0) return toast("Boş peron yok: önce bir dolmuş kalksın");
+  if(K.esya.cekici<=0 && K.jeton<FIYAT.cekici) return toast("Yeterli jeton yok 🪙");
   O.cekici=true; $("#tahta").classList.add("cekici-modu");
-  $("#yardim").textContent="🛻 Çekiciyle kaldırılacak dolmuşa dokun (vazgeçmek için tekrar bas)";
+  $("#yardim").textContent="🛻 Çekicinin durağa taşıyacağı dolmuşa dokun (vazgeçmek için tekrar bas)";
+}
+function cekiciKullan(a,el){
+  O.cekici=false; $("#tahta").classList.remove("cekici-modu"); $("#yardim").textContent="";
+  const i=bosPeron(); if(i<0) return toast("Boş peron yok");
+  if(!ode("cekici",FIYAT.cekici)) return;
+  ustGuncelle();
+  O.kalan=O.kalan.filter(x=>x.id!==a.id);
+  O.peron[i]={id:a.id,renk:a.renk,kap:a.kap,boy:a.hucreler.length,dolu:0,yolda:true,sira:Infinity};
+  peronCiz();
+  el.style.pointerEvents="none"; el.style.transition="transform .5s ease-in,opacity .5s";
+  el.style.transform="translateY(-60px) scale(.6) rotate(10deg)"; el.style.opacity="0";
+  ses("korna"); titre(30);
+  setTimeout(()=>{ el.remove(); perondaVar(i); },500);
+}
+function peronEkle(devam){
+  if(!O) return;
+  if(O.peron.length>=MAKS_PERON) return toast("En fazla "+MAKS_PERON+" peron olabilir");
+  if(!devam && !ode("peron",FIYAT.peron)) return;
+  O.peron.push(null); O.ekPeron++; ustGuncelle(); peronCiz(); ses("jeton");
+  if(devam){ O.bitti=false; pencereKapat(); document.querySelectorAll(".peron").forEach(e=>e.classList.remove("kilitli-p")); bindirBaslat(); }
+  else toast("Durağa yeni peron eklendi");
 }
 
+/* --- sonuç --- */
 function kazandi(){
   const ilkKez = O.n>=K.bolum;
-  const yildiz=O.can, onceki=K.enIyi[O.n]||0;
+  const yildiz=O.carpma===0?3:O.carpma<=2?2:1, onceki=K.enIyi[O.n]||0;
   K.seri=(K.seri||0)+1; K.enSeri=Math.max(K.enSeri||0,K.seri);
   const seriBonus=Math.min(K.seri-1,5)*2;
   const kazanc= ilkKez ? 10+yildiz*5+seriBonus : (yildiz>onceki ? 5*(yildiz-onceki) : 2);
   K.jeton+=kazanc; K.enIyi[O.n]=Math.max(onceki,yildiz);
   if(ilkKez) K.bolum=O.n+1;
   kaydet(); ses("kazan"); titre(60); konfeti();
-  pencereAc(`<h2>Durak boşaldı! 🎉</h2>
+  pencereAc(`<h2>Bütün yolcular yolda! 🎉</h2>
     <div class="yildiz">${"⭐".repeat(yildiz)}${"☆".repeat(3-yildiz)}</div>
-    <p>+${kazanc} 🪙 kazandın${ilkKez&&seriBonus?`<br>🔥 ${K.seri} seri bonusu dahil (+${seriBonus})`:""}${!ilkKez?"<br><small>Tekrar oynanan durak</small>":""}</p>
+    <p>+${kazanc} 🪙 kazandın${ilkKez&&seriBonus?`<br>🔥 ${K.seri} seri bonusu dahil (+${seriBonus})`:""}${yildiz<3?`<br><small>Hiç çarpmadan bitirirsen 3 yıldız</small>`:""}${!ilkKez?"<br><small>Tekrar oynanan durak</small>":""}</p>
     <button class="btn" id="sonraki">Sonraki durak ▶</button>
     <button class="btn gri" id="evDon">Ana ekran</button>`);
   $("#sonraki").onclick=()=>bolumBaslat(ilkKez?O.n+1:K.bolum);
   $("#evDon").onclick=()=>{ pencereKapat(); history.back(); };
 }
-
 function kaybetti(){
   ses("kaybet"); titre(200);
-  pencereAc(`<h2>Trafik kilitlendi 😬</h2>
-    <p>Canın bitti. ${K.seri>1?`<b>🔥 ${K.seri} durak serini</b> kaybetmemek için devam et!`:"Kaldığın yerden devam edebilir ya da durağı baştan deneyebilirsin."}</p>
-    <button class="btn" id="canAl">❤️ +1 can ile devam (${CAN_FIYAT}🪙)</button>
+  const ekVar=O.peron.length<MAKS_PERON;
+  pencereAc(`<h2>Durak kilitlendi 😬</h2>
+    <p>Peronların hepsi dolu ve öndeki yolcuya uygun dolmuş yok. ${K.seri>1?`<b>🔥 ${K.seri} durak serini</b> kaybetmemek için devam et!`:""}</p>
+    ${ekVar?`<button class="btn" id="devam">➕ Yeni peronla devam ${K.esya.peron>0?`(1 eşya)`:`(${DEVAM_FIYAT}🪙)`}</button>`:""}
     <button class="btn gri" id="tekrar">↻ Baştan dene</button>`);
-  $("#canAl").onclick=()=>{
-    if(K.jeton<CAN_FIYAT) return toast("Yeterli jeton yok 🪙");
-    K.jeton-=CAN_FIYAT; kaydet(); O.can=1; O.bitti=false; ustGuncelle(); pencereKapat();
+  if(ekVar) $("#devam").onclick=()=>{
+    if(K.esya.peron>0) K.esya.peron--; else if(K.jeton>=DEVAM_FIYAT) K.jeton-=DEVAM_FIYAT; else return toast("Yeterli jeton yok 🪙");
+    kaydet(); peronEkle(true);
   };
   $("#tekrar").onclick=()=>{ K.seri=0; kaydet(); bolumBaslat(O.n); };
 }
@@ -346,7 +466,7 @@ function gunlukPencere(){
   const d=gunlukDurum();
   const kutular=GUNLUK.map((o,i)=>{
     const g=i+1, sinif = d.alinabilir ? (g<d.gun?"alindi":g===d.gun?"bugun":"") : (g<=d.gun?"alindi":"");
-    return `<div class="gun ${sinif} ${g===7?"yedi":""}">${g}. gün<b>${o.j}🪙${o.ipucu?" +💡":""}${o.cekici?" +🛻":""}</b></div>`;
+    return `<div class="gun ${sinif} ${g===7?"yedi":""}">${g}. gün<b>${o.j}🪙${o.ipucu?" +💡":""}${o.peron?" +➕":""}${o.cekici?" +🛻":""}</b></div>`;
   }).join("");
   pencereAc(`<h2>🎁 Günlük hediye</h2>
     <p>Her gün gel, hediyen büyüsün. Bir gün kaçırırsan seri 1. günden başlar.</p>
@@ -354,7 +474,7 @@ function gunlukPencere(){
     ${d.alinabilir?`<button class="btn" id="hediyeAl">Hediyeni al</button>`:`<p><b>Bugünkü hediyeni aldın.</b> Yarın tekrar gel!</p><button class="btn gri" id="kapat">Kapat</button>`}`);
   if(d.alinabilir) $("#hediyeAl").onclick=()=>{
     const o=GUNLUK[d.gun-1];
-    K.jeton+=o.j; if(o.ipucu) K.esya.ipucu+=o.ipucu; if(o.cekici) K.esya.cekici+=o.cekici;
+    K.jeton+=o.j; ["ipucu","cekici","peron"].forEach(t=>{ if(o[t]) K.esya[t]+=o[t]; });
     K.gunluk={son:bugunStr(),gun:d.gun}; kaydet(); ses("jeton"); konfeti(); pencereKapat(); anaEkran();
     toast(`+${o.j} 🪙 hediye alındı!`);
   };
@@ -383,7 +503,7 @@ function ayarPencere(){
     <div class="ayar-satir">🔊 Ses<button class="anahtar ${K.ses?"acik":""}" id="sesA"></button></div>
     <div class="ayar-satir">📳 Titreşim<button class="anahtar ${K.titresim?"acik":""}" id="titA"></button></div>
     <div class="ayar-satir" id="nasil" style="cursor:pointer">❓ Nasıl oynanır <span>›</span></div>
-    <p style="font-size:13px;margin-top:14px">Dolmuş Durağı · sürüm 1.1<br>İlerlemen bu telefonda saklanır.</p>
+    <p style="font-size:13px;margin-top:14px">Dolmuş Durağı · sürüm 1.2<br>İlerlemen bu telefonda saklanır.</p>
     <button class="btn" id="kapat">Tamam</button>`);
   $("#sesA").onclick=()=>{ K.ses=!K.ses; kaydet(); ayarPencere(); };
   $("#titA").onclick=()=>{ K.titresim=!K.titresim; kaydet(); titre(40); ayarPencere(); };
@@ -392,7 +512,12 @@ function ayarPencere(){
 }
 function nasilPencere(){
   pencereAc(`<h2>Nasıl oynanır?</h2>
-  <p style="text-align:left">🚐 Her dolmuş burnunun baktığı yöne gider (farlar önde, tavandaki ok da yönü gösterir).<br>👆 Önü açık dolmuşa dokun, duraktan çıksın.<br>💥 Önü kapalıysa çarpar ve 1 can gider.<br>🧠 Doğru sırayı bul, durağı boşalt!<br>⭐ Hiç çarpmadan bitirirsen 3 yıldız.<br>💡 İpucu çıkabilecek bir dolmuşu parlatır.<br>🛻 Çekici istediğin bir dolmuşu kaldırır.<br>🔥 Art arda kazandıkça seri bonusu büyür.</p>
+  <p class="nasil">🚏 Durakta yolcular sıra bekliyor. Her yolcu kendi renginde dolmuşa biner.<br>
+  🚐 Otoparktaki dolmuş burnunun baktığı yöne gider. Önü açık olana dokun: durağa gelip boş perona girer.<br>
+  👥 Kuyruğun başındaki yolcular, aynı renkte yeri olan dolmuşa otomatik biner. Dolan dolmuş kalkar, peron boşalır.<br>
+  ⚠️ Peronların hepsi doluysa ve öndeki yolcuya uygun dolmuş yoksa durak kilitlenir.<br>
+  ⭐ Hiç çarpmadan bitirirsen 3 yıldız.<br>
+  💡 İpucu · 🛻 Çekici (istediğin dolmuşu durağa taşır) · ➕ Peron (fazladan bekleme yeri)</p>
   <button class="btn" id="kapat">Anladım</button>`);
   $("#kapat").onclick=pencereKapat;
 }
@@ -405,7 +530,7 @@ function anaEkran(){
   $("#anaSeri").textContent=`🔥 ${K.seri||0} seri`;
   const d=gunlukDurum();
   $("#hediyeBtn").innerHTML="🎁 Günlük hediye"+(d.alinabilir?'<span class="sayac">!</span>':"");
-  const v=[[1,0,"U"],[2,3,"U"],[3,1,"U"],[2,2,"U"],[1,4,"U"]];
+  const v=[[1,3,"U"],[2,0,"U"],[3,1,"U"],[2,2,"U"],[1,4,"U"]];
   $("#vitrin").innerHTML=v.map(([b,c,y])=>`<div style="width:44px;height:${b*36}px">${Cizim.aracSvg(b,c,y)}</div>`).join("");
 }
 $("#oyna").onclick=()=>bolumBaslat(K.bolum);
@@ -413,18 +538,19 @@ $("#haritaBtn").onclick=haritaAc;
 $("#hediyeBtn").onclick=gunlukPencere;
 $("#ayarBtn").onclick=ayarPencere;
 document.querySelectorAll("[data-geri]").forEach(b=>b.onclick=()=>history.back());
-$("#yenidenBtn").onclick=()=>{ if(O&&!O.kilit) bolumBaslat(O.n); };
+$("#yenidenBtn").onclick=()=>{ if(O) bolumBaslat(O.n); };
 $("#ipucuBtn").onclick=ipucu;
 $("#cekiciBtn").onclick=cekici;
+$("#peronBtn").onclick=()=>{ if(O&&!O.bitti) peronEkle(false); };
 // Telefonun geri tuşu: önce pencereyi kapatır, sonra ana ekrana döner
 window.addEventListener("popstate",()=>{
   if(pencereAcik() && aktifEkran==="ana"){ pencereKapat(); return; }
   pencereKapat(); anaEkran();
 });
-window.addEventListener("resize",()=>{ if(O&&aktifEkran==="oyun") ciz(); });
+window.addEventListener("resize",()=>{ if(O&&aktifEkran==="oyun"){ kuyrukCiz(); peronCiz(); ciz(); } });
 
 anaEkran();
-if(gunlukDurum().alinabilir && K.gunluk.son) setTimeout(gunlukPencere,400); // her gün açılışta hatırlat (ilk açılış hariç)
+if(gunlukDurum().alinabilir && K.gunluk.son) setTimeout(gunlukPencere,400);
 </script>
 </body>
 </html>
