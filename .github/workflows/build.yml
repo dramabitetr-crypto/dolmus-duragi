@@ -52,8 +52,8 @@ jobs:
         run: |
           M=android/app/src/main/AndroidManifest.xml
           sed -i 's/android:name=".MainActivity"/android:name=".MainActivity" android:screenOrientation="portrait"/' $M
-          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.VIBRATE" />\n</manifest>#' $M
-          grep -q 'screenOrientation="portrait"' $M && grep -q 'permission.VIBRATE' $M
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.VIBRATE" />\n    <uses-feature android:name="android.hardware.screen.portrait" android:required="false" />\n</manifest>#' $M
+          grep -q 'screenOrientation="portrait"' $M && grep -q 'permission.VIBRATE' $M && grep -q 'screen.portrait" android:required="false"' $M
 
       - name: Android 16 (API 36) hedefi
         run: |
