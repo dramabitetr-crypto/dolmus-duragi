@@ -252,7 +252,7 @@ function bolumBaslat(n){
   $("#durakNo").textContent="Durak "+n;
   $("#durakAlt").textContent=durakAdi(n)+(K.seri>1?` · 🔥 ${K.seri} seri`:"");
   $("#tabela").textContent="🚏 "+durakAdi(n).toLocaleUpperCase("tr-TR")+" DURAĞI";
-  $("#yardim").textContent = n===1 ? "Önü açık dolmuşa dokun: durağa gidip kendi rengindeki yolcuları alsın 👆"
+  $("#yardim").textContent = n===1 ? "Dolmuş üstündeki okun yönüne gider. Önü açık olana dokun 👆"
     : n===2 ? "Kuyruğun başındaki yolcunun rengine bak, o renkteki dolmuşu gönder"
     : n===3 ? "Dikkat: peronların hepsi dolar ve öndeki yolcuya uygun dolmuş yoksa durak kilitlenir!" : "";
   if(aktifEkran!=="oyun") git("oyun");
@@ -503,7 +503,7 @@ function ayarPencere(){
     <div class="ayar-satir">🔊 Ses<button class="anahtar ${K.ses?"acik":""}" id="sesA"></button></div>
     <div class="ayar-satir">📳 Titreşim<button class="anahtar ${K.titresim?"acik":""}" id="titA"></button></div>
     <div class="ayar-satir" id="nasil" style="cursor:pointer">❓ Nasıl oynanır <span>›</span></div>
-    <p style="font-size:13px;margin-top:14px">Dolmuş Durağı · sürüm 1.2<br>İlerlemen bu telefonda saklanır.</p>
+    <p style="font-size:13px;margin-top:14px">Dolmuş Durağı · sürüm 1.3<br>İlerlemen bu telefonda saklanır.</p>
     <button class="btn" id="kapat">Tamam</button>`);
   $("#sesA").onclick=()=>{ K.ses=!K.ses; kaydet(); ayarPencere(); };
   $("#titA").onclick=()=>{ K.titresim=!K.titresim; kaydet(); titre(40); ayarPencere(); };
@@ -513,7 +513,7 @@ function ayarPencere(){
 function nasilPencere(){
   pencereAc(`<h2>Nasıl oynanır?</h2>
   <p class="nasil">🚏 Durakta yolcular sıra bekliyor. Her yolcu kendi renginde dolmuşa biner.<br>
-  🚐 Otoparktaki dolmuş burnunun baktığı yöne gider. Önü açık olana dokun: durağa gelip boş perona girer.<br>
+  🚐 Her dolmuş üstündeki beyaz okun gösterdiği yöne gider (farları da o tarafta yanar). Önü açık olana dokun: durağa gelip boş perona girer.<br>
   👥 Kuyruğun başındaki yolcular, aynı renkte yeri olan dolmuşa otomatik biner. Dolan dolmuş kalkar, peron boşalır.<br>
   ⚠️ Peronların hepsi doluysa ve öndeki yolcuya uygun dolmuş yoksa durak kilitlenir.<br>
   ⭐ Hiç çarpmadan bitirirsen 3 yıldız.<br>

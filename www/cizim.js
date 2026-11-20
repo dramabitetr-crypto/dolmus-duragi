@@ -40,13 +40,13 @@
     const arka_cam = f(minik ? 0.70 : 0.70), bagaj = f(minik ? 0.80 : 0.78);
     const tx1 = x1 + W * 0.13, tx2 = x2 - W * 0.13;
     const damaGen = minik ? 3.2 : 3.6;
-    return `
+    return `${farIsigi(x1 + W * 0.2, x2 - W * 0.2, y1 + 4)}
     <rect x="${x1 + 2}" y="${y1 + 4}" width="${W}" height="${L}" rx="18" fill="rgba(0,0,0,.35)"/>
     <rect x="${x1}" y="${y1}" width="${W}" height="${L}" rx="${minik ? 16 : 20}" fill="${b.govde}" stroke="${b.koyu}" stroke-width="2"/>
     <rect x="${x1 + 6}" y="${y1 - 1}" width="${W - 12}" height="5" rx="2.5" fill="#D9DDE3" stroke="#9aa1aa" stroke-width="1"/>
     <rect x="${x1 + 6}" y="${y2 - 4}" width="${W - 12}" height="5" rx="2.5" fill="#D9DDE3" stroke="#9aa1aa" stroke-width="1"/>
-    <circle cx="${x1 + W * 0.2}" cy="${y1 + 9}" r="${minik ? 5 : 6}" fill="#FFF6C4" stroke="#8a7a3a" stroke-width="1.2"/>
-    <circle cx="${x2 - W * 0.2}" cy="${y1 + 9}" r="${minik ? 5 : 6}" fill="#FFF6C4" stroke="#8a7a3a" stroke-width="1.2"/>
+    <circle cx="${x1 + W * 0.2}" cy="${y1 + 9}" r="${minik ? 6 : 7}" fill="#FFE45C" stroke="#fff" stroke-width="1.8"/>
+    <circle cx="${x2 - W * 0.2}" cy="${y1 + 9}" r="${minik ? 6 : 7}" fill="#FFE45C" stroke="#fff" stroke-width="1.8"/>
     <rect x="${x1 + W * 0.42}" y="${y1 + 5}" width="${W * 0.16}" height="5" rx="1.5" fill="#BFC5CC"/>
     <rect x="${x1 + 5}" y="${y2 - 12}" width="${minik ? 8 : 10}" height="6" rx="2" fill="#D3262E"/>
     <rect x="${x2 - 5 - (minik ? 8 : 10)}" y="${y2 - 12}" width="${minik ? 8 : 10}" height="6" rx="2" fill="#D3262E"/>
@@ -58,8 +58,8 @@
     <path d="M${tx1} ${arka_cam} L${tx2} ${arka_cam} L${x2 - W * 0.1} ${bagaj} L${x1 + W * 0.1} ${bagaj} Z" fill="#2E4053"/>
     <ellipse cx="${x1 - 2}" cy="${kaput + 2}" rx="4" ry="3" fill="${b.koyu}"/>
     <ellipse cx="${x2 + 2}" cy="${kaput + 2}" rx="4" ry="3" fill="${b.koyu}"/>
-    ${minik ? "" : tabela(50, (on_cam + arka_cam) / 2, tx2 - tx1)}
-    ${yonOku(50, minik ? (on_cam + arka_cam) / 2 : on_cam + (arka_cam - on_cam) * 0.2, minik ? 9 : 8)}`;
+    ${minik ? "" : tabela(50, arka_cam - 9, tx2 - tx1)}
+    ${minik ? yonOku(50, (kaput + arka_cam) / 2, 17) : yonOku(50, (kaput + on_cam) / 2 + 12, 22)}`;
   }
 
   // Minibüs (boy 3)
@@ -72,37 +72,48 @@
       pencere += `<rect x="${x1 + 3}" y="${y}" width="7" height="20" rx="2" fill="#2E4053"/>`;
       pencere += `<rect x="${x2 - 10}" y="${y}" width="7" height="20" rx="2" fill="#2E4053"/>`;
     }
-    return `
+    return `${farIsigi(x1 + 13, x2 - 13, y1 + 4)}
     <rect x="${x1 + 2}" y="${y1 + 4}" width="${W}" height="${L}" rx="16" fill="rgba(0,0,0,.35)"/>
     <rect x="${x1}" y="${y1}" width="${W}" height="${L}" rx="16" fill="${b.govde}" stroke="${b.koyu}" stroke-width="2"/>
     <rect x="${x1 + 6}" y="${y1 - 1}" width="${W - 12}" height="5" rx="2.5" fill="#D9DDE3" stroke="#9aa1aa" stroke-width="1"/>
     <rect x="${x1 + 6}" y="${y2 - 4}" width="${W - 12}" height="5" rx="2.5" fill="#D9DDE3" stroke="#9aa1aa" stroke-width="1"/>
-    <rect x="${x1 + 7}" y="${y1 + 6}" width="12" height="7" rx="2" fill="#FFF6C4" stroke="#8a7a3a" stroke-width="1"/>
-    <rect x="${x2 - 19}" y="${y1 + 6}" width="12" height="7" rx="2" fill="#FFF6C4" stroke="#8a7a3a" stroke-width="1"/>
+    <rect x="${x1 + 7}" y="${y1 + 6}" width="12" height="7" rx="2" fill="#FFE45C" stroke="#fff" stroke-width="1.6"/>
+    <rect x="${x2 - 19}" y="${y1 + 6}" width="12" height="7" rx="2" fill="#FFE45C" stroke="#fff" stroke-width="1.6"/>
     <rect x="${x1 + 5}" y="${y2 - 12}" width="10" height="6" rx="2" fill="#D3262E"/>
     <rect x="${x2 - 15}" y="${y2 - 12}" width="10" height="6" rx="2" fill="#D3262E"/>
     <path d="M${x1 + 6} ${kaput} L${x2 - 6} ${kaput} L${x2 - 10} ${on_cam} L${x1 + 10} ${on_cam} Z" fill="#2E4053"/>
     <path d="M${x1 + 12} ${kaput + 2} L${x1 + 28} ${kaput + 2} L${x1 + 22} ${on_cam - 2} L${x1 + 13} ${on_cam - 2} Z" fill="rgba(255,255,255,.35)"/>
     <rect x="${x1 + 12}" y="${on_cam + 2}" width="${W - 24}" height="${arka - on_cam - 4}" rx="6" fill="${b.tavan}" stroke="${b.koyu}" stroke-width="1"/>
-    <rect x="${x1 + 20}" y="${on_cam + 14}" width="${W - 40}" height="${Math.max(10, (arka - on_cam) * 0.12)}" rx="3" fill="rgba(0,0,0,.12)"/>
     ${pencere}
     <rect x="${x1 + 12}" y="${arka}" width="${W - 24}" height="7" rx="2" fill="#2E4053"/>
     <ellipse cx="${x1 - 2}" cy="${kaput + 4}" rx="4" ry="3" fill="${b.koyu}"/>
     <ellipse cx="${x2 + 2}" cy="${kaput + 4}" rx="4" ry="3" fill="${b.koyu}"/>
     
-    ${tabela(50, on_cam + (arka - on_cam) * 0.55, W - 34)}
-    ${yonOku(50, on_cam + 18 + (arka - on_cam) * 0.12, 10)}`;
+    ${tabela(50, arka - 16, W - 34)}
+    ${yonOku(50, on_cam + 34, 24)}
+    ${yonOku(50, on_cam + 34 + (arka - on_cam - 50) * 0.5, 16, true)}`;
   }
 
   function tabela(cx, cy, gen) {
     const ters = TERS ? ` transform="rotate(180 ${cx} ${cy})"` : "";
     const w = Math.min(gen - 6, 56), h = 14;
     return `<g${ters}><rect x="${cx - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" rx="3" fill="#1B1B1B" stroke="#F7C21B" stroke-width="1.5"/>
-      <text x="${cx}" y="${cy + 3.6}" font-size="10" font-weight="800" text-anchor="middle" fill="#F7C21B" font-family="Arial,sans-serif" letter-spacing=".5">DOLMU&#350;</text></g>`;
+      <text x="${cx}" y="${cy + 3.6}" font-size="10" font-weight="800" text-anchor="middle" fill="#F7C21B" font-family="Arial,sans-serif" letter-spacing=".5" textLength="${Math.min(44, w - 6)}" lengthAdjust="spacingAndGlyphs">DOLMU&#350;</text></g>`;
   }
 
-  function yonOku(cx, cy, r) {
-    return `<path d="M${cx} ${cy - r} L${cx + r} ${cy + r * 0.6} L${cx} ${cy + r * 0.15} L${cx - r} ${cy + r * 0.6} Z" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.7)" stroke-width="1.2"/>`;
+  // Gidiş yönü oku: kalın beyaz ok, koyu kenarlı; her renkte dolmuşun üstünde net görünür
+  function yonOku(cx, cy, r, soluk) {
+    const sap = r * 0.36, bas = r * 0.95;
+    const d = `M${cx} ${cy - r} L${cx + bas} ${cy - r + bas} L${cx + sap} ${cy - r + bas} L${cx + sap} ${cy + r} L${cx - sap} ${cy + r} L${cx - sap} ${cy - r + bas} L${cx - bas} ${cy - r + bas} Z`;
+    return `<path d="${d}" transform="translate(1.5 2.5)" fill="rgba(0,0,0,.35)"/>
+      <path d="${d}" fill="#fff" stroke="#1B1B1B" stroke-width="${soluk ? 2.5 : 3.2}" stroke-linejoin="round" opacity="${soluk ? 0.75 : 1}"/>`;
+  }
+
+  // Önden asfalta düşen far ışığı: aracın burnunun hangi uçta olduğunu gösterir
+  function farIsigi(xa, xb, y) {
+    const u = 16, a = 7;
+    return `<path d="M${xa - 4} ${y} L${xa - a - 6} ${y - u} L${xa + a} ${y - u} L${xa + 4} ${y} Z" fill="rgba(255,238,140,.8)"/>
+      <path d="M${xb - 4} ${y} L${xb - a} ${y - u} L${xb + a + 6} ${y - u} L${xb + 4} ${y} Z" fill="rgba(255,238,140,.8)"/>`;
   }
 
   // Dışarıya açılan fonksiyon: boy (1-3), boya no, yön (U/D/L/R) → <svg> metni
